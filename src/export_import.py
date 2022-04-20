@@ -5,7 +5,7 @@ import numpy as np
 
 import matplotlib.cm as cm
 
-def export_data(G:nx.DiGraph, posG3D, partition_dict, cmap, step=None, max_deg=None):
+def export_data(G:nx.DiGraph, posG3D, partition_dict, cmap, path='./', step=None, max_deg=None):
     # make a dictonary {node: rgb_values}
 
     ####################################
@@ -43,9 +43,9 @@ def export_data(G:nx.DiGraph, posG3D, partition_dict, cmap, step=None, max_deg=N
     max_z = max(lz)
 
     if step != None:
-        f = open(f'./data/nodes_step{step}.csv','w')
+        f = open(path + f'nodes_{step}.csv','w')
     else:
-        f = open(f'./data/nodes.csv','w')
+        f = open(path + f'nodes.csv','w')
 
     d_node_rowID = {}
     cc = 0
@@ -64,9 +64,9 @@ def export_data(G:nx.DiGraph, posG3D, partition_dict, cmap, step=None, max_deg=N
         b = int(255*node_color[node][2])
         alpha = int(node_alpha[node]*node_color[node][3])
         if deg[f'{node}'] == 0:
-            node_size = 1/max_deg * 100
+            node_size = 1/max_deg * 40
         else:
-            node_size = deg[f'{node}']/max_deg * 100
+            node_size = deg[f'{node}']/max_deg * 40
         name = str(node)
         f.write('%s,%s,%s,%s,%s,%s,%s,%s,%s\n' %(xn,yn,zn,r,g,b,alpha,node_size,name))
         cc += 1
@@ -74,9 +74,9 @@ def export_data(G:nx.DiGraph, posG3D, partition_dict, cmap, step=None, max_deg=N
     f.close()
 
     if step != None:
-        f = open(f'./data/edges_step{step}.csv','w')
+        f = open(path + f'edges_{step}.csv','w')
     else:
-        f = open(f'./data/edges.csv','w')
+        f = open(path + f'edges.csv','w')
 
     cc = 0
     for u,v in G.edges():

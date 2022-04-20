@@ -6,7 +6,7 @@ import matplotlib.cm as cm
 import plotly
 import plotly.graph_objs as pgo
 
-def get_trace_nodes_3D_legend(posG, info, color, size, legend_names = None, linewidth=0.000001, opac = 0.9):
+def get_trace_nodes_3D_legend(posG, info, color, size, legend_names = None, linewidth=0.000001, opac = 0.9, auto_open=True):
     '''
     Get trace of nodes for plotting in 3D.
     Input:
@@ -248,4 +248,4 @@ def plot_3D(data,path,fname, scheme='light',annotat=None, show_leg=True):
     fig.update_yaxes(visible=False)
     fig.write_html(path+fname+'.html')
 
-    return plotly.offline.plot(fig, filename = path+fname+'.html', auto_open=True)
+    return plotly.offline.plot(fig, filename = path+fname+'.html', auto_open=auto_open)
