@@ -6,7 +6,7 @@ import matplotlib.cm as cm
 import plotly
 import plotly.graph_objs as pgo
 
-def get_trace_nodes_3D_legend(posG, info, color, size, legend_names = None, linewidth=0.000001, opac = 0.9, auto_open=True):
+def get_trace_nodes_3D_legend(posG, info, color, size, legend_names = None, linewidth=0.000001, opac = 0.9):
     '''
     Get trace of nodes for plotting in 3D.
     Input:
