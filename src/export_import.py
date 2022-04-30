@@ -6,16 +6,6 @@ import numpy as np
 import matplotlib.cm as cm
 
 def export_data(G:nx.DiGraph, posG3D, partition_dict, cmap, path='./', step=None, max_deg=None):
-    # make a dictonary {node: rgb_values}
-
-    ####################################
-    ## color based on node clustering ##
-    ####################################
-    #number_of_partitions = max(partition_dict.values())+1
-    #rgb_alpha = [list(cmap.colors[i]) for i in range(0, number_of_partitions)]
-    #node_partition = list(partition_dict.items())
-    #node_color = {node: rgb_alpha[partition] for  node, partition in node_partition}
-
     ######################################
     ## color based on degree centrality ##
     ######################################
@@ -24,9 +14,9 @@ def export_data(G:nx.DiGraph, posG3D, partition_dict, cmap, path='./', step=None
     s_deg = list(set(deg.values()))
     cmap = cm.get_cmap('Reds', len(s_deg))
     rgb_alpha = cmap(np.arange(0, cmap.N))
-    node_alpha = {node: 1 for node, L in deg.items()}
+    #node_alpha = {node: 1 for node, L in deg.items()}
     node_color = {node: rgb_alpha[s_deg.index(degree)] for  node, degree in deg.items()}
-    #node_alpha = {node: 100/max(deg.values()) * L for node, L in deg.items()}
+    node_alpha = {node: 100/np.log(max(deg.values())) * np.log(L, where=L>0) for node, L in dict(G.in_degree).items()}
 
     if max_deg == None:
         max_deg = max(s_deg)
@@ -59,16 +49,19 @@ def export_data(G:nx.DiGraph, posG3D, partition_dict, cmap, path='./', step=None
         yn = (y-min_y)/(max_y-min_y)
         zn = (z-min_z)/(max_z-min_z)
 
-        r = int(255*node_color[node][0])
-        g = int(255*node_color[node][1])
-        b = int(255*node_color[node][2])
-        alpha = int(node_alpha[node]*node_color[node][3])
-        if deg[f'{node}'] == 0:
-            node_size = 1/max_deg * 40
-        else:
-            node_size = deg[f'{node}']/max_deg * 40
+        #r = int(255*node_color[node][0])
+        #g = int(255*node_color[node][1])
+        #b = int(255*node_color[node][2])
+        r = int(255)
+        g = int(255)
+        b = int(255)
+        alpha = int(node_alpha[node])
+        #if deg[f'{node}'] == 0:
+        #    node_size = 1/max_deg * 40
+        #else:
+        #    node_size = deg[f'{node}']/max_deg * 40
         name = str(node)
-        f.write('%s,%s,%s,%s,%s,%s,%s,%s,%s\n' %(xn,yn,zn,r,g,b,alpha,node_size,name))
+        f.write('%s,%s,%s,%s,%s,%s,%s,%s\n' %(xn,yn,zn,r,g,b,alpha,name))
         cc += 1
 
     f.close()
@@ -112,14 +105,13 @@ def read_data(nodes_file, edges_file):
         g = float(line.strip().split(',')[4])
         b = float(line.strip().split(',')[5])
         alpha = float(line.strip().split(',')[6])
-        node_size = float(line.strip().split(',')[7])
         color = f'rgba({r}, {g}, {b}, {alpha})'
         d_nodecolors[str(cc)] = color
 
-        hinfo = line.strip().split(',')[8]
+        hinfo = line.strip().split(',')[7]
         d_hoverinfo[str(cc)] = hinfo
 
-        d_nodesize[str(cc)] = node_size
+        d_nodesize[str(cc)] = 8
 
         cc += 1
 

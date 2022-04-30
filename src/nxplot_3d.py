@@ -68,7 +68,7 @@ def get_trace_nodes_3D_legend(posG, info, color, size, legend_names = None, line
                             symbol = 'circle',
                             line = dict(width = linewidth,
                                     color = 'dimgrey'),
-                            opacity = opac,
+                            opacity = float(col[4:][1:-1].split(', ')[-1]),
                         ),
                     name = "Group: "+str(list(legend_names.values())[elem])
                     )
@@ -99,7 +99,7 @@ def get_trace_nodes_3D_legend(posG, info, color, size, legend_names = None, line
                             symbol = 'circle',
                             line = dict(width = linewidth,
                                     color = 'dimgrey'),
-                            opacity = opac,
+                            opacity = float(col[4:][1:-1].split(', ')[-1])/100,
                         ),
                     name = "Group: "+str(elem)
                     )
@@ -159,7 +159,7 @@ def get_trace_edges_3D(G, posG, color = '#C7C7C7', opac = 0.1, linewidth=0.1):
 
 
 
-def plot_3D(data,path,fname, scheme='light',annotat=None, show_leg=True, auto_open=True):
+def plot_3D(data, path, fname, scheme='light',annotat=None, show_leg=True, auto_open=True):
     '''
     Create a 3D plot from traces using plotly.
     Input:
