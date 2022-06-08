@@ -5,7 +5,7 @@ import numpy as np
 
 import matplotlib.cm as cm
 
-def export_data(G:nx.DiGraph, posG3D, partition_dict, cmap, path='./', step=None, max_deg=None):
+def export_data(G:nx.DiGraph, posG3D, cmap, path='./', step=None, max_deg=None):
     ######################################
     ## color based on degree centrality ##
     ######################################
@@ -15,8 +15,8 @@ def export_data(G:nx.DiGraph, posG3D, partition_dict, cmap, path='./', step=None
     cmap = cm.get_cmap('Reds', len(s_deg))
     rgb_alpha = cmap(np.arange(0, cmap.N))
     #node_alpha = {node: 1 for node, L in deg.items()}
+    #node_alpha = {node: 100/np.log(max(deg.values())) * np.log(L, where=L>0) for node, L in dict(G.in_degree).items()}
     node_color = {node: rgb_alpha[s_deg.index(degree)] for  node, degree in deg.items()}
-    node_alpha = {node: 100/np.log(max(deg.values())) * np.log(L, where=L>0) for node, L in dict(G.in_degree).items()}
 
     if max_deg == None:
         max_deg = max(s_deg)
@@ -52,10 +52,17 @@ def export_data(G:nx.DiGraph, posG3D, partition_dict, cmap, path='./', step=None
         #r = int(255*node_color[node][0])
         #g = int(255*node_color[node][1])
         #b = int(255*node_color[node][2])
-        r = int(255)
-        g = int(255)
-        b = int(255)
-        alpha = int(node_alpha[node])
+        if str(node) == 'seaborn':
+            r = int(255)
+            g = int(0)
+            b = int(0)
+            alpha = 200
+        else:
+            r = int(255)
+            g = int(255)
+            b = int(255)
+            alpha = 100
+
         #if deg[f'{node}'] == 0:
         #    node_size = 1/max_deg * 40
         #else:
