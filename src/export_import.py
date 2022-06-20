@@ -5,21 +5,7 @@ import numpy as np
 
 import matplotlib.cm as cm
 
-def export_data(G:nx.DiGraph, posG3D, cmap, path='./', step=None, max_deg=None):
-    ######################################
-    ## color based on degree centrality ##
-    ######################################
-
-    deg = dict(G.degree())
-    s_deg = list(set(deg.values()))
-    cmap = cm.get_cmap('Reds', len(s_deg))
-    rgb_alpha = cmap(np.arange(0, cmap.N))
-    #node_alpha = {node: 1 for node, L in deg.items()}
-    #node_alpha = {node: 100/np.log(max(deg.values())) * np.log(L, where=L>0) for node, L in dict(G.in_degree).items()}
-    node_color = {node: rgb_alpha[s_deg.index(degree)] for  node, degree in deg.items()}
-
-    if max_deg == None:
-        max_deg = max(s_deg)
+def export_data(G:nx.DiGraph, posG3D, node_color, node_alpha, chosen_nodes=[], path='./', step=None):
 
     lx = [x for x,y,z in posG3D.values()]
     ly = [y for x,y,z in posG3D.values()]
@@ -39,34 +25,29 @@ def export_data(G:nx.DiGraph, posG3D, cmap, path='./', step=None, max_deg=None):
 
     d_node_rowID = {}
     cc = 0
-    for node, xyz in sorted(posG3D.items()):
+#    for node, xyz in sorted(posG3D.items()):
+    for node in G.nodes():
         d_node_rowID[node] = cc
-        x = xyz[0]
-        y = xyz[1]
-        z = xyz[2]
+        x = posG3D[node][0]
+        y = posG3D[node][1]
+        z = posG3D[node][2]
 
         xn = (x-min_x)/(max_x-min_x)
         yn = (y-min_y)/(max_y-min_y)
         zn = (z-min_z)/(max_z-min_z)
 
-        #r = int(255*node_color[node][0])
-        #g = int(255*node_color[node][1])
-        #b = int(255*node_color[node][2])
-        if str(node) == 'seaborn':
+
+        if str(node) in chosen_nodes:
             r = int(255)
             g = int(0)
             b = int(0)
-            alpha = 200
-        else:
-            r = int(255)
-            g = int(255)
-            b = int(255)
             alpha = 100
+        else:
+            r = int(255*node_color[node][0])
+            g = int(255*node_color[node][1])
+            b = int(255*node_color[node][2])
+            alpha = node_alpha[node]
 
-        #if deg[f'{node}'] == 0:
-        #    node_size = 1/max_deg * 40
-        #else:
-        #    node_size = deg[f'{node}']/max_deg * 40
         name = str(node)
         f.write('%s,%s,%s,%s,%s,%s,%s,%s\n' %(xn,yn,zn,r,g,b,alpha,name))
         cc += 1
