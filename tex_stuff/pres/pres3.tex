@@ -1,0 +1,90 @@
+\documentclass[fleqn]{beamer}
+\beamertemplatenavigationsymbolsempty
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{mathptmx}
+\usepackage{subcaption}
+\usepackage{amsthm}
+\usepackage{tikz}
+%\usepackage[colorlinks=true,naturalnames=true,plainpages=false,pdfpagelabels=true]{hyperref}
+\usetikzlibrary{patterns,decorations.pathmorphing,positioning, arrows, chains}
+
+\usepackage[backend=biber, sorting=none]{biblatex}
+\addbibresource{uni.bib}
+
+\setbeamertemplate{endpage}{%
+    \begin{frame}
+        \centering
+        \Large \emph{Thank You!}
+    \end{frame}
+}
+
+\AtEndDocument{\usebeamertemplate{endpage}}
+
+% vertical separator macro
+\newcommand{\vsep}{
+  \column{0.0\textwidth}
+    \begin{tikzpicture}
+      \draw[very thick,black!10] (0,0) -- (0,7.3);
+    \end{tikzpicture}
+}
+\setlength{\mathindent}{0pt}
+
+% Beamer theme
+\usetheme{UniVienna}
+\usefonttheme[onlysmall]{structurebold}
+\mode<presentation>
+\setbeamercovered{transparent=10}
+
+\title
+{Seminar Complex Network Analysis}
+\subtitle{Project Progress}
+\author[Popović Milutin]
+{Popović Milutin}
+\date{13. May 2021}
+
+\begin{document}
+    \begin{frame}
+        \titlepage
+    \end{frame}
+
+    \begin{frame}
+        \centering
+        \textbf{Python Package Dependency Network}
+        \vspace{1cm}
+        \begin{columns}[T]
+            \column{0.4\textwidth}
+            \column{0.4\textwidth}
+        \end{columns}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Analysis}
+        \begin{figure}[htpb]
+            \centering
+            \includegraphics[width=0.8\textwidth]{./pics/top_all_edge_growth.png}
+            \caption{Node growth in log scale, all rounder top nodes of all
+            time}
+        \end{figure}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Analysis since 20016}
+        \begin{figure}[htpb]
+            \centering
+            \includegraphics[width=0.8\textwidth]{./pics/deg_2016_growth.png}
+        \end{figure}
+    \end{frame}
+
+
+    \begin{frame}{Bibliography}
+        \nocite{barabasi}
+        \nocite{pypi}
+        \printbibliography
+    \end{frame}
+\end{document}
+
