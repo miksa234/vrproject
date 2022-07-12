@@ -5,11 +5,14 @@
 \usepackage[utf8]{inputenc}
 
 \usepackage{amsmath,amssymb}
+\usepackage{nccmath}
 \usepackage{graphicx}
 \usepackage{mathptmx}
+\usepackage{mathtools}
 \usepackage{subcaption}
 \usepackage{amsthm}
 \usepackage{tikz}
+\usepackage{pgfplots}
 %\usepackage[colorlinks=true,naturalnames=true,plainpages=false,pdfpagelabels=true]{hyperref}
 \usetikzlibrary{patterns,decorations.pathmorphing,positioning, arrows, chains}
 
@@ -63,6 +66,31 @@
     \end{frame}
 
     \begin{frame}
+        \frametitle{Graph}
+        \begin{itemize}
+            \item directed Graph with approx. $10^{6}$ links and
+                $3.6\cdot10^{5}$ nodes
+            \item packages represent nodes
+            \item dependencies between packages represent links
+        \end{itemize}
+        \vspace{1cm}
+            \centering package1 $\rightarrow$ package2\\
+        \vspace{0.25cm}
+            \centering only if package1 is dependent on package2
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Data}
+        \begin{itemize}
+            \item data is indexed on PyPI\cite{pypi} (Python Package Index)
+            \item \texttt{json}-type for all packages
+            \item containing information such as release date, package
+                dependencies, download counts
+            \item can be resorted into a time evolving network
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
         \frametitle{Analysis}
         \begin{figure}[htpb]
             \centering
@@ -80,11 +108,33 @@
         \end{figure}
     \end{frame}
 
+    \begin{frame}
+        \frametitle{Visualization}
+        \begin{itemize}
+            \item Objective: construct a layout to visualize the analysis
+                intuitively
+            \item layout based on degree distribution (power-law)
+        \end{itemize}
 
-    \begin{frame}{Bibliography}
-        \nocite{barabasi}
-        \nocite{pypi}
-        \printbibliography
+        \begin{figure}[htpb]
+            \centering
+            \includegraphics[width=0.8\textwidth]{./pics/layout_setup.png}
+            \caption{Layout setup}
+        \end{figure}
     \end{frame}
+    \begin{frame}
+        \frametitle{Outlook}
+        \begin{itemize}
+            \item incorporate number of downloads into the network
+            \item create a weighted directed graph
+            \item could open doors to more analysis
+        \end{itemize}
+    \end{frame}
+
+        \begin{frame}{Bibliography}
+            \nocite{barabasi}
+            \nocite{pypi}
+            \printbibliography
+        \end{frame}
 \end{document}
 
